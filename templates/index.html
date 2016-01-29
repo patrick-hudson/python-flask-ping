@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+ 
+<head>
+    <title>Python Flask Bucket List App</title>
+ 
+     <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+
+    <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
+ 
+    <link href="http://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet">
+ 
+ 
+</head>
+<script>
+function updateProgress(percentage){
+    if(percentage > 100) percentage = 100;
+    $('#progressBar').css('width', percentage+'%');
+    //$('#progressBar').html(percentage+'%');
+}
+$(function() {
+    $('#send').click(function() {
+        updateProgress(0);
+        var hostsDone = 0;
+        var total=$('input[name="region"]:checked').length;
+        console.log(total);
+        $(".chk:checked").each(function(i, val) {
+            region = this.id;
+            console.log(this.id)
+            var user = $('#ip').val();
+            $.ajax({
+                url: '/ping/'+region,
+                data: $('form').serialize(),
+                type: 'POST',
+                success: function(response) {
+                    console.log(response);
+                     $('.jumbotron').append('<span>'+ response+'</span><br />');
+                },
+                error: function(error) {
+                    console.log(error);
+                }
+        }).done(function(msg) {
+                hostsDone++;
+                updateProgress((hostsDone/total)*100);
+
+            });
+        });
+    });
+});
+</script>
+<body>
+ 
+    <div class="container">
+        <div class="header">
+            <nav>
+                <ul class="nav nav-pills pull-right">
+                    <li role="presentation" class="active"><a href="#">Home</a>
+                    </li>
+                </ul>
+            </nav>
+            <h3 class="text-muted">Python Flask App</h3>
+        </div>
+ 
+        <div class="jumbotron">
+            <h1></h1>
+
+        </div>
+    <form action="/ping" method="post" enctype="multipart/form-data">
+    <span>IP</span><input type="text" name="ip" id="ip">
+    <button type="button" id="send" class="btn btn-primary">Primary</button>
+      <div class="checkbox">
+      <input type="checkbox" name="region" class="chk" id="LON"> London
+      <input type="checkbox" name="region" class="chk" id="DFW"> DFW
+  </div>
+  <div class="progress progress-striped active" style="height:44px;">
+    <div id="progressBar" class="bar" style="height:44px;width:0%;background-color:green">Status</div>
+</div>
+    <br>
+    
+    </form>
+        <footer class="footer">
+            <p>&copy; Patrick Hudson 2015</p>
+        </footer>
+ 
+    </div>
+    <span>{{result}}</span>
+</body>
+ 
+</html>
