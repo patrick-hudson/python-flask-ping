@@ -29,7 +29,7 @@ $(function() {
             console.log(this.id)
             var user = $('#ip').val();
             $.ajax({
-                url: '/ping/'+region,
+                url: "http://"+region.toLowerCase()+'.tracert.io/ping/'+region,
                 data: $('form').serialize(),
                 type: 'POST',
                 success: function(response) {
@@ -69,7 +69,7 @@ $(function() {
     <span>IP</span><input type="text" name="ip" id="ip">
     <button type="button" id="send" class="btn btn-primary">Primary</button>
       <div class="checkbox">
-      <input type="checkbox" name="region" class="chk" id="LON"> London
+      <input type="checkbox" name="region" class="chk" id="ORG"> ORG
       <input type="checkbox" name="region" class="chk" id="DFW"> DFW
   </div>
   <div class="progress progress-striped active" style="height:44px;">

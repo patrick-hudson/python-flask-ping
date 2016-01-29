@@ -1,3 +1,4 @@
+#!/home/tracert/.virtualenvs/python-flask-ping/bin/python
 from flask import Flask, render_template, request, jsonify
 from werkzeug.routing import BaseConverter
 import pyping
@@ -17,6 +18,7 @@ def main():
     #return_time = r.output
     return render_template('index.html')
 @app.route("/ping/<region>",methods=['POST'])
+@cross_origin()
 def catch_all(region):
     ip = request.form['ip']
     if request.method == 'POST':
@@ -33,4 +35,4 @@ def catch_all(region):
     #return 'You want path: %s' % param
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=5001, debug=True)
