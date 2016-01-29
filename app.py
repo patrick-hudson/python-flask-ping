@@ -1,5 +1,6 @@
 #!/home/tracert/.virtualenvs/python-flask-ping/bin/python
 from flask import Flask, render_template, request, jsonify
+from flask.ext.cors import CORS
 from werkzeug.routing import BaseConverter
 import pyping
 app = Flask(__name__)
