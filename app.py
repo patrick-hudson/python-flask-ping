@@ -4,6 +4,7 @@ from flask.ext.cors import CORS
 from werkzeug.routing import BaseConverter
 import pyping
 app = Flask(__name__)
+CORS(app)
 statusPing = 0
 class RegexConverter(BaseConverter):
     def __init__(self, url_map, *items):
@@ -19,7 +20,6 @@ def main():
     #return_time = r.output
     return render_template('index.html')
 @app.route("/ping/<region>",methods=['POST'])
-@cross_origin()
 def catch_all(region):
     ip = request.form['ip']
     if request.method == 'POST':
